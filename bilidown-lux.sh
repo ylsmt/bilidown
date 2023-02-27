@@ -211,7 +211,7 @@ function getInfo()
         #获得封面图下载链接
         subcontent=${item#*<img src=\"}
         photolink=${subcontent%%\"*}
-        echo  "$(date -d "$pubDate" +"%Y-%m-%d %H:%M:%S"),$title,$author,$link,$photolink|"
+        echo  "$(date -d "$pubDate" +"%Y-%m-%d %H:%M:%S"),$title,$author,$link,$photolink"
     fi
     done |sort -t , -k 1n )
 }
@@ -220,12 +220,11 @@ init $1 $2 $3 $4
 
 # 获取rss中待下载视频信息
 getInfo
-# | 替换为换行,再替换末尾的|
-rssdata=$(echo $res|sed 's/| /\n/g'|sed 's/|//g')
+
 # 以换行符分割
 IFS=$'\n'
 # 分割为数组
-rssdata=($rssdata)
+rssdata=($res)
 echo ${#rssdata[@]}
 check
 if [ $? -eq 1 ];then
